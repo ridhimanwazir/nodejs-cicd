@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Users</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #createUserForm {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+    <h1>Current Users</h1>
+    <br>
+    <br>
+    <!-- Display users in a table -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            <!-- User rows will be added here dynamically -->
+        </tbody>
+    </table>
+<br>
+<br>
+    <h1>Add New Users</h1>
+
+    <!-- Form to create a new user -->
+    <form id="createUserForm">
+        <label for="userName">Name:</label>
+        <input type="text" id="userName" name="userName" required>
+        <button type="button" onclick="createUser()">Create User</button>
+    </form>
+
+    <script>
+        // Function to create a new user
+        function createUser() {
+            const userName = document.getElementById('userName').value;
+
+            // Send a request to create a new user (you can use AJAX or fetch here)
+            // For simplicity, let's assume the server responds with the new user object
+            const newUser = { id: Date.now(), name: userName };
+
+            // Add the new user to the table
+            const userTableBody = document.getElementById('userTableBody');
+            const newRow = userTableBody.insertRow();
+            newRow.innerHTML = `<td>${newUser.id}</td><td>${newUser.name}</td>`;
+        }
+    </script>
+</body>
+</html>
