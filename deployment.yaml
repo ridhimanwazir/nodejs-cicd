@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: nodeapp-deployment
 spec:
-  replicas: 2 # Set the desired number of replicas
+  replicas: 1 # Set the desired number of replicas
   selector:
     matchLabels:
       app: nodeapp
