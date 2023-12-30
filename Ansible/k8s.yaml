@@ -1,0 +1,29 @@
+---
+- name: deploy to k8
+  hosts: local
+  gather_facts: false
+  become: yes  # Use sudo for copying if required
+
+  tasks:
+    - name: Delete Deployment
+      command: kubectl delete deployment webapp-deployment --kubeconfig=/home/ubuntu/.kube/config
+      ignore_errors: true
+
+    - name: Delete service
+      command: kubectl delete services webapp-service --kubeconfig=/home/ubuntu/.kube/config
+      ignore_errors: true
+
+    - name: Remove file
+      command: rm -rf /home/ubuntu/deployment.yaml
+      ignore_errors: true
+
+    - name: Copy deployment.yaml to Kubernetes master
+      copy:
+        src: /var/lib/jenkins/workspace/python-webapp/deployment.yaml  # Assuming Jenkins workspace variable
+        dest: /home/ubuntu/
+
+    - name: Apply Deployment
+      command: kubectl apply --validate=false -f /home/ubuntu/deployment.yaml --kubeconfig=/home/ubuntu/.kube/config
+
+    - name: Apply Ingress
+      command: kubectl apply --validate=false -f /home/ubuntu/ingress.yaml --kubeconfig=/home/ubuntu/.kube/config

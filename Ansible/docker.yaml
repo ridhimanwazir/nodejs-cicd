@@ -1,0 +1,30 @@
+---
+- name: docker build and push
+  hosts: local
+  gather_facts: false
+  become: yes  # Use sudo for copying if required
+
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    - name: Build Docker Image
+      command: docker build -t python-webapp .
+      args:
+        chdir: /var/lib/jenkins/workspace/python-webapp
+
+    - name: tag image
+      command: docker tag python-webapp:latest ridhimanwazir/python-webapp:latest
+
+    - name: Log in to Docker Hub
+      community.docker.docker_login:
+        registry_url: https://index.docker.io/v1/
+        username: ridhimanwazir
+        password: dckr_pat_IFZzI8goYatKSoksul8D_ipQnY8
+
+    - name: Push image
+      command: docker push ridhimanwazir/python-webapp:latest
+
+    - name: Run container
+      command: docker run -d --name webapp -p 5000:5000 ridhimanwazir/python-webapp:latest
