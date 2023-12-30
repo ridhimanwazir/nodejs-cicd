@@ -40,10 +40,7 @@ pipeline {
             steps {
                 dir('Ansible') {
                     script {
-                            def ansibleCommand = """
-                                ansible-playbook -i /etc/ansible/hosts docker.yaml -vvv
-                            """
-                            sh(ansibleCommand)
+                            ansiblePlaybook credentialsId: 'ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/', playbook: 'docker.yaml'
                    }
                 }
             }
