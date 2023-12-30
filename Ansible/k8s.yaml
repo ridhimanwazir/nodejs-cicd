@@ -22,6 +22,11 @@
         src: /var/lib/jenkins/workspace/nodejs-app/deployment.yaml  # Assuming Jenkins workspace variable
         dest: /home/ridhimansingh
 
+    - name: Copy service.yaml to Kubernetes master
+      copy:
+        src: /var/lib/jenkins/workspace/nodejs-app/service.yaml  # Assuming Jenkins workspace variable
+        dest: /home/ridhimansingh
+
     - name: Copy ingress.yaml to Kubernetes master
       copy:
         src: /var/lib/jenkins/workspace/nodejs-app/ingress.yaml  # Assuming Jenkins workspace variable
@@ -29,5 +34,8 @@
 
     - name: Apply Deployment
       command: kubectl apply --validate=false -f /home/ridhimansingh/deployment.yaml --kubeconfig=/home/ridhimansingh/.kube/config
+
+    - name: Apply service
+      command: kubectl apply --validate=false -f /home/ridhimansingh/service.yaml --kubeconfig=/home/ridhimansingh/.kube/config
 
 
