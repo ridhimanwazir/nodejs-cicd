@@ -13,10 +13,6 @@
       command: kubectl delete service/nodeapp-service --kubeconfig=/home/ridhimansingh.kube/config
       ignore_errors: true
 
-    - name: Remove file
-      command: rm -rf /home/ridhimansingh/deployment.yaml
-      ignore_errors: true
-
     - name: Copy deployment.yaml to Kubernetes master
       copy:
         src: /var/lib/jenkins/workspace/nodejs-app/deployment.yaml  # Assuming Jenkins workspace variable
@@ -37,5 +33,8 @@
 
     - name: Apply service
       command: kubectl apply --validate=false -f /home/ridhimansingh/service.yaml --kubeconfig=/home/ridhimansingh/.kube/config
+
+    - name: Apply ingress
+      command: kubectl apply --validate=false -f /home/ridhimansingh/ingress.yaml --kubeconfig=/home/ridhimansingh/.kube/config
 
 
