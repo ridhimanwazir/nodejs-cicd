@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-deployment
+  name: nodeapp-deployment
 spec:
   replicas: 2 # Set the desired number of replicas
   selector:
     matchLabels:
-      app: webapp
+      app: nodeapp
   template:
     metadata:
       labels:
-        app: webapp
+        app: nodeapp
     spec:
       containers:
-        - name: webapp
-          image: ridhimanwazir/python-webapp:latest # Replace with your Docker image name
+        - name: nodeapp
+          image: ridhimanwazir/nodejs-app:latest # Replace with your Docker image name
           ports:
             - containerPort: 5000 # Expose the port specified in your Dockerfile
 
@@ -22,10 +22,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webapp-service
+  name: nodeapp-service
 spec:
   selector:
-    app: webapp
+    app: nodeapp
   ports:
     - protocol: TCP
       port: 5000

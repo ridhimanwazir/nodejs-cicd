@@ -6,24 +6,28 @@
 
   tasks:
     - name: Delete Deployment
-      command: kubectl delete deployment webapp-deployment --kubeconfig=/home/ubuntu/.kube/config
+      command: kubectl delete deployment nodeapp-deployment --kubeconfig=/home/ridhimansingh/.kube/config
       ignore_errors: true
 
     - name: Delete service
-      command: kubectl delete services webapp-service --kubeconfig=/home/ubuntu/.kube/config
+      command: kubectl delete services nodeapp-service --kubeconfig=/home/ridhimansingh.kube/config
       ignore_errors: true
 
     - name: Remove file
-      command: rm -rf /home/ubuntu/deployment.yaml
+      command: rm -rf /home/ridhimansingh/deployment.yaml
       ignore_errors: true
 
     - name: Copy deployment.yaml to Kubernetes master
       copy:
-        src: /var/lib/jenkins/workspace/python-webapp/deployment.yaml  # Assuming Jenkins workspace variable
-        dest: /home/ubuntu/
+        src: /var/lib/jenkins/workspace/nodejs-app/deployment.yaml  # Assuming Jenkins workspace variable
+        dest: /home/ridhimansingh
+
+    - name: Copy ingress.yaml to Kubernetes master
+      copy:
+        src: /var/lib/jenkins/workspace/nodejs-app/ingress.yaml  # Assuming Jenkins workspace variable
+        dest: /home/ridhimansingh
 
     - name: Apply Deployment
-      command: kubectl apply --validate=false -f /home/ubuntu/deployment.yaml --kubeconfig=/home/ubuntu/.kube/config
+      command: kubectl apply --validate=false -f /home/ridhimansingh/deployment.yaml --kubeconfig=/home/ridhimansingh/.kube/config
 
-    - name: Apply Ingress
-      command: kubectl apply --validate=false -f /home/ubuntu/ingress.yaml --kubeconfig=/home/ubuntu/.kube/config
+
