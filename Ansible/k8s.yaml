@@ -1,6 +1,6 @@
 ---
 - name: deploy to k8
-  hosts: local
+  hosts: k8s
   gather_facts: false
   become: yes  # Use sudo for copying if required
 

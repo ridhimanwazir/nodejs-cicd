@@ -50,6 +50,14 @@ pipeline {
                 sh "trivy image ridhimanwazir/python-webapp:latest > trivy.txt"
             }
         }
-        
+        stage('k8 deployment using ansible') {
+            steps {
+                dir('Ansible') {
+                    script {
+                ansiblePlaybook credentialsId: 'ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/', playbook: 'k8s.yaml'
+                    }
+                }
+            }
+        }
     }
 }
