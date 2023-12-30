@@ -14,14 +14,14 @@ pipeline {
         }
         stage('Checkout From Git') {
             steps {
-                git branch: 'main', url: 'https://github.com/ridhimanwazir/python-webapp-cicd.git'
+                git branch: 'main', url: 'https://github.com/ridhimanwazir/nodejs-cicd.git'
             }
         }
         stage("Sonarqube Analysis ") {
             steps {
                 withSonarQubeEnv('sonar-server') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Python-Webapp \
-                        -Dsonar.projectKey=Python-Webapp '''
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=nodejs-app \
+                        -Dsonar.projectKey=nodejs-app '''
                 }
             }
         }
