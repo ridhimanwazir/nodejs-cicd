@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nodeapp-deployment
 spec:
-  replicas: 2 # Set the desired number of replicas
+  replicas: 1 # Set the desired number of replicas
   selector:
     matchLabels:
       app: nodeapp
@@ -27,7 +27,9 @@ spec:
   selector:
     app: nodeapp
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 4000
-      nodePort: 30001
-  type: NodePort # Use NodePort service type
+  type: LoadBalancer
+  externalIPs:
+  - 35.209.245.73
