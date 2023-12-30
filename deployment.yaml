@@ -16,7 +16,7 @@ spec:
         - name: nodeapp
           image: ridhimanwazir/nodejs-app:latest # Replace with your Docker image name
           ports:
-            - containerPort: 5000 # Expose the port specified in your Dockerfile
+            - containerPort: 4000 # Expose the port specified in your Dockerfile
 
 ---
 apiVersion: v1
@@ -28,5 +28,5 @@ spec:
     app: nodeapp
   ports:
     - protocol: TCP
-      port: 5000
+      port: 4000
   type: NodePort # Use NodePort service type
