@@ -10,7 +10,7 @@
 
 ## Install helm 
 
-`helm install grafana-server grafana/grafana`
+`helm install grafana-server grafana/grafana -n prometheus`
 
 ## Expose Grafana Service
 
