@@ -6,11 +6,11 @@
 
   tasks:
     - name: Delete Deployment
-      command: kubectl delete deployment nodeapp-deployment --kubeconfig=/home/ridhimansingh/.kube/config
+      command: kubectl delete deployment.apps/nodeapp-deployment --kubeconfig=/home/ridhimansingh/.kube/config
       ignore_errors: true
 
     - name: Delete service
-      command: kubectl delete services nodeapp-service --kubeconfig=/home/ridhimansingh.kube/config
+      command: kubectl delete service/nodeapp-service --kubeconfig=/home/ridhimansingh.kube/config
       ignore_errors: true
 
     - name: Remove file
