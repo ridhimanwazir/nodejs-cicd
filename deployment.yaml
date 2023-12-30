@@ -29,4 +29,5 @@ spec:
   ports:
     - protocol: TCP
       port: 4000
+      nodePort: 30001
   type: NodePort # Use NodePort service type

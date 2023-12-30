@@ -1,16 +1,18 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nodeapp-ingress
 spec:
+  ingressClassName: nginx
   rules:
-  - host: nodeapp.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nodeapp-service
-            port:
-              number: 4000
+    - host: sampleapp.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: nodeapp-service
+                port:
+                  number: 4000
