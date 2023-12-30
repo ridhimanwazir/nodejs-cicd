@@ -80,9 +80,10 @@ app.post('/users', (req, res) => {
 });
 
 // Endpoint to expose metrics
-app.get('/metrics', (req, res) => {
+app.get('/metrics', async (req, res) => {
   res.set('Content-Type', prometheus.register.contentType);
-  res.end(prometheus.register.metrics());
+  const metrics = await prometheus.register.metrics();
+  res.end(metrics);
 });
 
 app.listen(PORT, () => {
