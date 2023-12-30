@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 4000
 
 # Define the command to run your app using CMD which runs when the container starts
-CMD ["node", "src/app.js"]
+CMD ["node", "app.js"]
