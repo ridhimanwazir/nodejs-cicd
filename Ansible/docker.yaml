@@ -9,6 +9,14 @@
       apt:
         update_cache: yes
 
+    - name: stop old docker container
+      command: docker container stop nodeapp
+      ignore_errors: true
+
+    - name: Delete old docker container
+      command: docker container rm nodeapp
+      ignore_errors: true
+
     - name: Build Docker Image
       command: docker build -t nodejs-app .
       args:
