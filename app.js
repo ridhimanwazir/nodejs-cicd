@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Sample data (in-memory storage)
 let users = [
-  { id: 1, name: 'John Doe' },
+  { id: 1, name: 'ridhiman' },
   { id: 2, name: 'Jane Doe' },
 ];
 
