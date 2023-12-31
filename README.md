@@ -103,18 +103,29 @@ Deploying nodejs app on Kubernetes using CI/CD with Jenkins in `Ubuntu`
 
 - once the pipeline has run there will be a docker image with the specified tags registered to the docker registry and a docker container will be running which can be used to access the application on   
   `external IP:5000`
-- There will be a k8s deployment, service, and ingress available( the service should be accessible on `load balancer IP:nodePort`
-- The ingress will have a domain assigned sampleapp.local which is mapped to the load balancer IP
+- There will be a k8s deployment, service, and ingress available( the service should be accessible on `load balancer IP`
+- To use ingress we also need to setup nginx ingress controller which will automatically detect ingress resources and direct the traffic to the specified host 
+- The ingress will have a domain assigned `sampleapp.local` which is mapped to the load balancer IP
   `Curl -L http:\\sampleapp.local` will return the HTML page
 
 ## Step 6 - Monitoring and Logging using Prometheus and Grafana
 
-- Setup Prometheus and Grafana using the specific readme available in the respective folder in this repo `prometheus_setup/helm.md` && `grafana_setup/helm.md`,
-  which will start Prometheus and Grafana service in   
-  miniKube.
+- Setup Prometheus and Grafana using the below link
+
+  [Prometheus-Grafana](https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html)
   
-  Prometheus - `minikubeIP:9090`
+  Prometheus - `external IP:nodePort`
   
-  Grafana - `minikubeIP:3000`
-- since we used helm for the setup Prometheus will by default scraps all available minikube metrics which can also be verified in `minikubeIP:9090/targets`
-- Add Prometheus as the default data source in Grafana and create a dashboard using one of the readily available ones on grafana with sufficient metrics required to set up monitoring.
+  Grafana - `external IP:nodePort`
+  
+- our nodejs application is using promql to send metrics and these metrics are available at `load balancer IP/metrics`
+- Add Prometheus as the default data source in Grafana and update prometheus.yml to add a new job which will scrap the application metrics
+  ```
+  scrape_configs:
+  - job_name: 'your_job_name'
+    static_configs:
+      - targets: ['35.208.72.203:4000']
+  ```
+  verify in targets to validate if Prometheus is scrapping the metrics.
+- Create a grafana dashboard to monitor all the scrapped metrics.
+  
