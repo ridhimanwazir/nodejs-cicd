@@ -18,7 +18,8 @@ Deploying nodejs app on Kubernetes using CI/CD with Jenkins in `Ubuntu`
 
 - Set up one GCP compute engine with the below-mentioned tools except for Kubernetes.
 - Create one compute engine for the Kubernetes master and another for the Kubernetes worker.
-  Kubectl
+- create one loadbalancer to redirect traffic so as to avoid using nodePort
+- Kubectl Setup on CE running Jenkins
   ```
   sudo apt update
   sudo apt install curl
@@ -73,7 +74,7 @@ Deploying nodejs app on Kubernetes using CI/CD with Jenkins in `Ubuntu`
 
 ## Step 3 - SonarQube Server
 
-### Use docker to start a Sonarqube Server which will be accessible on `ip:9000`
+### Use docker to start a Sonarqube Server which will be accessible on `external IP:9000`
 `docker run -d --name sonar -p 9000:9000 sonarqube:lts-community`
 
 ## Jenkins Setup
@@ -91,8 +92,9 @@ Deploying nodejs app on Kubernetes using CI/CD with Jenkins in `Ubuntu`
   
 - Add the IP where Jenkins is installed this will allow Ansible to run the setup for docker and minikube using the Playbooks
   ```
-  [local]#any name you want
-  localhost
+  [k8s] #any name you want
+  external IP of Jenkins vm
+  external IP of Kubernetes master vm
 - verify that the host is reachable
   ```
   ansible -m ping all
@@ -100,10 +102,10 @@ Deploying nodejs app on Kubernetes using CI/CD with Jenkins in `Ubuntu`
 ## Step 5 - Create Jenkins Pipeline using the Jenkinsfile available in this repo and add a build trigger to poll Git so that the pipeline can run whenever a new change is deployed
 
 - once the pipeline has run there will be a docker image with the specified tags registered to the docker registry and a docker container will be running which can be used to access the application on   
-  `localhost:5000`
-- There will be a minikube deployment, service, and ingress available( the service should be accessible on `minikubeIP:nodePort`
-- The ingress will have a domain assigned webapp.local which is mapped to minikubeIP
-  `Curl -L http:\\webapp.local` will return the html page
+  `external IP:5000`
+- There will be a k8s deployment, service, and ingress available( the service should be accessible on `load balancer IP:nodePort`
+- The ingress will have a domain assigned sampleapp.local which is mapped to the load balancer IP
+  `Curl -L http:\\sampleapp.local` will return the HTML page
 
 ## Step 6 - Monitoring and Logging using Prometheus and Grafana
 
