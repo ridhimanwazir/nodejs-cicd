@@ -11,6 +11,8 @@ Deploying nodejs app on Kubernetes using CI/CD with Jenkins in `Ubuntu`
 ### Architecture
 
 
+![image](https://github.com/ridhimanwazir/nodejs-cicd/assets/46512771/0e03a60f-d6f1-4e92-b5ef-a5833efc4746)
+
 
 ## Step 1 - Setup GCP free account and Compute Engines
 
