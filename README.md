@@ -26,7 +26,7 @@ Deploying nodejs app on Kubernetes using CI/CD with Jenkins in `Ubuntu`
   sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
   kubectl version --client
 
--  Master and Worker node setup
+- Master and Worker node setup
   ```
   sudo apt-get update 
   sudo apt-get install -y docker.io
