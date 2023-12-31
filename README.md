@@ -1,9 +1,11 @@
-# Python-webapp
-Deploying Python webapp on miniKube using CI/CD with Jenkins in `Ubuntu`
+# nodejs-app
+Deploying nodejs app on Kubernetes using CI/CD with Jenkins in `Ubuntu`
 
 End-to-end demonstration video available on; [Loom](https://www.loom.com/share/86873c74606a4edb9b4e40da6d91280a)
 
-## Step 1 — Install Java, Jenkins, Docker, Trivy, minikube, Ansible, and helm
+## Step 1 - Setup GCP free account and Compute Engines
+
+## Step 2 — Install Java, Jenkins, Docker, Trivy, minikube, Ansible, and helm
 
 [Java](https://www.rosehosting.com/blog/how-to-install-java-17-lts-on-ubuntu-20-04/)
 
@@ -19,7 +21,7 @@ End-to-end demonstration video available on; [Loom](https://www.loom.com/share/8
 
 [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html)
 
-## Step 2 - SonarQube Server
+## Step 3 - SonarQube Server
 
 ### Use docker to start a Sonarqube Server which will be accessible on `ip:9000`
 `docker run -d --name sonar -p 9000:9000 sonarqube:lts-community`
@@ -30,7 +32,7 @@ End-to-end demonstration video available on; [Loom](https://www.loom.com/share/8
 - Enable jdk17, SonarScanner, Docker, and Ansible in Jenkins tools
 - Configure sonarQube in the Jenkins system
 
-## Step 3 - Setup Ansible Repository in Ubuntu
+## Step 4 - Setup Ansible Repository in Ubuntu
 
 - Create an Inventory file in Ansible
   ```
@@ -45,7 +47,7 @@ End-to-end demonstration video available on; [Loom](https://www.loom.com/share/8
   ```
   ansible -m ping all
 
-## Step 4 - Create Jenkins Pipeline using the Jenkinsfile available in this repo and add a build trigger to poll Git so that the pipeline can run whenever a new change is deployed
+## Step 5 - Create Jenkins Pipeline using the Jenkinsfile available in this repo and add a build trigger to poll Git so that the pipeline can run whenever a new change is deployed
 
 - once the pipeline has run there will be a docker image with the specified tags registered to the docker registry and a docker container will be running which can be used to access the application on   
   `localhost:5000`
@@ -53,7 +55,7 @@ End-to-end demonstration video available on; [Loom](https://www.loom.com/share/8
 - The ingress will have a domain assigned webapp.local which is mapped to minikubeIP
   `Curl -L http:\\webapp.local` will return the html page
 
-## Step 5 - Monitoring and Logging using Prometheus and Grafana
+## Step 6 - Monitoring and Logging using Prometheus and Grafana
 
 - Setup Prometheus and Grafana using the specific readme available in the respective folder in this repo `prometheus_setup/helm.md` && `grafana_setup/helm.md`,
   which will start Prometheus and Grafana service in   
@@ -62,5 +64,5 @@ End-to-end demonstration video available on; [Loom](https://www.loom.com/share/8
   Prometheus - `minikubeIP:9090`
   
   Grafana - `minikubeIP:3000`
-- since we used helm for the setup Prometheus will by default scrap all available minikube metrics which can also be verified in `minikubeIP:9090/targets`
+- since we used helm for the setup Prometheus will by default scraps all available minikube metrics which can also be verified in `minikubeIP:9090/targets`
 - Add Prometheus as the default data source in Grafana and create a dashboard using one of the readily available ones on grafana with sufficient metrics required to set up monitoring.
